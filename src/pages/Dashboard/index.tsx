@@ -1,4 +1,8 @@
 import React from "react";
+import { getBottomSpace } from "react-native-iphone-x-helper";
+
+import HighligthCard from "../../components/HighligthCard";
+import TransactionCard from "../../components/TransactionCard";
 
 import {
   Container,
@@ -10,10 +14,38 @@ import {
   UserGreeting,
   UserName,
   HighligthsCard,
+  Transactions,
+  TransactionList,
+  Title,
   Icon,
 } from "./styles";
 
-import HighligthCard from "../../components/HighligthCard";
+const data = [
+  {
+    title: "Desenvolvimento de site",
+    amount: "R$ 12.000,00",
+    category: { name: "Vendas", icon: "dollar-sign" },
+    date: "13/05/2021",
+  },
+  {
+    title: "Desenvolvimento de site",
+    amount: "R$ 12.000,00",
+    category: { name: "Vendas", icon: "dollar-sign" },
+    date: "13/05/2021",
+  },
+  {
+    title: "Desenvolvimento de site",
+    amount: "R$ 12.000,00",
+    category: { name: "Vendas", icon: "dollar-sign" },
+    date: "13/05/2021",
+  },
+  {
+    title: "Desenvolvimento de site",
+    amount: "R$ 12.000,00",
+    category: { name: "Vendas", icon: "dollar-sign" },
+    date: "13/05/2021",
+  },
+];
 
 const Dashboard: React.FC = () => {
   return (
@@ -57,6 +89,17 @@ const Dashboard: React.FC = () => {
           lastTransaction="Última entrada dia 13 de Abril"
         />
       </HighligthsCard>
+
+      <Transactions>
+        <Title>Listagem</Title>
+
+        <TransactionList
+          data={data}
+          renderItem={({ item }) => <TransactionCard data={item} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: getBottomSpace() }}
+        />
+      </Transactions>
     </Container>
   );
 };
