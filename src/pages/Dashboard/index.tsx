@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, View } from "react-native";
 
 import {
   Container,
@@ -10,7 +9,9 @@ import {
   User,
   UserGreeting,
   UserName,
+  Icon,
 } from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const Dashboard: React.FC = () => {
   return (
@@ -29,6 +30,8 @@ const Dashboard: React.FC = () => {
               <UserName>Charles</UserName>
             </User>
           </UserInfo>
+
+          <Icon name="power" />
         </UserWrapper>
       </Header>
     </Container>
