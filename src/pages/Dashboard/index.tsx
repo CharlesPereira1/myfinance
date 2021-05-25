@@ -9,9 +9,11 @@ import {
   User,
   UserGreeting,
   UserName,
+  HighligthsCard,
   Icon,
 } from "./styles";
-import { RFValue } from "react-native-responsive-fontsize";
+
+import HighligthCard from "../../components/HighligthCard";
 
 const Dashboard: React.FC = () => {
   return (
@@ -34,6 +36,12 @@ const Dashboard: React.FC = () => {
           <Icon name="power" />
         </UserWrapper>
       </Header>
+
+      <HighligthsCard>
+        <HighligthCard />
+        <HighligthCard />
+        <HighligthCard />
+      </HighligthsCard>
     </Container>
   );
 };
