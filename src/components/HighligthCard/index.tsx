@@ -10,17 +10,35 @@ import {
   Icon,
 } from "./styles";
 
-const HighligthCard: React.FC = () => {
+interface HighlighProps {
+  title: string;
+  amount: string;
+  lastTransaction: string;
+  type: "down" | "total" | "up";
+}
+
+const HighligthCard: React.FC<HighlighProps> = ({
+  type,
+  title,
+  amount,
+  lastTransaction,
+}) => {
+  const icon = {
+    up: "arrow-up-circle",
+    down: "arrow-down-circle",
+    total: "dollar-sign",
+  };
+
   return (
-    <Container>
+    <Container type={type}>
       <Header>
-        <Title>Entrada</Title>
-        <Icon name="arrow-up-circle" />
+        <Title type={type}>{title}</Title>
+        <Icon name={icon[type]} type={type} />
       </Header>
 
       <Footer>
-        <Amount>R$ 17.400,0</Amount>
-        <LastTransaction>Última entrada dia 13 de abril</LastTransaction>
+        <Amount type={type}>{amount}</Amount>
+        <LastTransaction type={type}>{lastTransaction}</LastTransaction>
       </Footer>
     </Container>
   );

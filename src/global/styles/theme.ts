@@ -4,8 +4,8 @@ export default {
     secundary: "#ff872c",
     secundary_light: "rgba(255, 135, 44, 0.3)",
 
-    seccess: "#12a454",
-    seccess_light: "rgba(18, 164, 84, 0.5)",
+    success: "#12a454",
+    success_light: "rgba(18, 164, 84, 0.5)",
 
     attention: "#e83f5b",
     attention_light: "rgba(232, 63, 91, 0.5)",
