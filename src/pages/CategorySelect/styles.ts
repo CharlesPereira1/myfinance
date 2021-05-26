@@ -2,7 +2,14 @@ import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-export const Container = styled.View`
+//impede que o android tire a funcionalidade do button - android
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+interface Props {
+  isActive: boolean;
+}
+
+export const Container = styled(GestureHandlerRootView)`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
 `;
@@ -24,12 +31,15 @@ export const Title = styled.Text`
   font-size: ${RFValue(18)}px;
 `;
 
-export const Category = styled.View`
+export const Category = styled.TouchableOpacity<Props>`
   width: 100%;
   padding: ${RFValue(15)}px;
 
   flex-direction: row;
   align-items: center;
+
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.secundaryLight : theme.colors.background};
 `;
 
 export const Icon = styled(Feather)`

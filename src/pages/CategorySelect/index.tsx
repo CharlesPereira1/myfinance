@@ -22,9 +22,9 @@ interface CategoryProps {
 }
 
 interface Props {
-  category?: string;
-  setCategory?: (category: CategoryProps) => void;
-  closeSelectCategory?: () => void;
+  category: CategoryProps;
+  setCategory: (category: CategoryProps) => void;
+  closeSelectCategory: () => void;
 }
 
 const CategorySelect: React.FC<Props> = ({
@@ -32,6 +32,10 @@ const CategorySelect: React.FC<Props> = ({
   setCategory,
   closeSelectCategory,
 }) => {
+  const handleCategorySelect = (item: CategoryProps) => {
+    setCategory(item);
+  };
+
   return (
     <Container>
       <Header>
@@ -43,7 +47,10 @@ const CategorySelect: React.FC<Props> = ({
         style={{ flex: 1, width: "100%" }}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <Category>
+          <Category
+            onPress={() => handleCategorySelect(item)}
+            isActive={category.key === item.key}
+          >
             <Icon name={item.icon} />
             <Name>{item.name}</Name>
           </Category>
@@ -52,7 +59,7 @@ const CategorySelect: React.FC<Props> = ({
       />
 
       <Footer>
-        <Button title="Selecionar" />
+        <Button title="Selecionar" onPress={closeSelectCategory} />
       </Footer>
     </Container>
   );

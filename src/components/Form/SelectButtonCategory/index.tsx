@@ -1,15 +1,15 @@
 import React from "react";
-import { TextInput } from "react-native";
 
 import { Container, Category, Icon } from "./styles";
 
 interface Props {
   title: string;
+  onPress: () => void;
 }
 
-const SelectButtonCategory: React.FC<Props> = ({ title }) => {
+const SelectButtonCategory: React.FC<Props> = ({ title, onPress }) => {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <Category>{title}</Category>
       <Icon name="chevron-down" />
     </Container>
