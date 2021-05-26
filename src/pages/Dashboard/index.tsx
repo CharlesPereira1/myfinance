@@ -12,6 +12,7 @@ import {
   Header,
   UserWrapper,
   UserInfo,
+  LogoutButton,
   Photo,
   User,
   UserGreeting,
@@ -80,7 +81,9 @@ const Dashboard: React.FC = () => {
             </User>
           </UserInfo>
 
-          <Icon name="power" />
+          <LogoutButton>
+            <Icon name="power" />
+          </LogoutButton>
         </UserWrapper>
       </Header>
 
