@@ -2,13 +2,13 @@ export default {
   colors: {
     primary: "#5636D3",
     secundary: "#ff872c",
-    secundary_light: "rgba(255, 135, 44, 0.3)",
+    secundaryLight: "rgba(255, 135, 44, 0.3)",
 
     success: "#12a454",
-    success_light: "rgba(18, 164, 84, 0.5)",
+    successLight: "rgba(18, 164, 84, 0.5)",
 
     attention: "#e83f5b",
-    attention_light: "rgba(232, 63, 91, 0.5)",
+    attentionLight: "rgba(232, 63, 91, 0.5)",
 
     shape: "#fff",
     title: "#363f6f",
