@@ -7,7 +7,7 @@ interface Props {
   title: string;
 }
 
-const Select: React.FC<Props> = ({ title }) => {
+const SelectButtonCategory: React.FC<Props> = ({ title }) => {
   return (
     <Container>
       <Category>{title}</Category>
@@ -16,4 +16,4 @@ const Select: React.FC<Props> = ({ title }) => {
   );
 };
 
-export default Select;
+export default SelectButtonCategory;

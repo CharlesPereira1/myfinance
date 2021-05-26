@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../../components/Form/Button";
 
 import Input from "../../components/Form/Input";
-import Select from "../../components/Form/Select";
+import SelectButtonCategory from "../../components/Form/SelectButtonCategory";
 import TransactionTypeButton from "../../components/Form/TransactionTypeButton";
 
 import {
@@ -47,7 +47,7 @@ const Register: React.FC = () => {
             />
           </TransactionTypes>
 
-          <Select title="Categoria" />
+          <SelectButtonCategory title="Categoria" />
         </Fields>
 
         <Button title="Enviar" />
