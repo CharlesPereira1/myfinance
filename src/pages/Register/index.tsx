@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import uuid from "react-native-uuid";
-import { useNavigation } from "@react-navigation/native";
-import * as Yup from "yup";
+import React, { useEffect, useState } from 'react';
+import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import uuid from 'react-native-uuid';
+import { useNavigation } from '@react-navigation/native';
+import * as Yup from 'yup';
 
-import Button from "../../components/Form/Button";
-import InputForm from "../../components/Form/InputForm";
-import SelectButtonCategory from "../../components/Form/SelectButtonCategory";
-import TransactionTypeButton from "../../components/Form/TransactionTypeButton";
-import CategorySelect from "../CategorySelect";
+import Button from '../../components/Form/Button';
+import InputForm from '../../components/Form/InputForm';
+import SelectButtonCategory from '../../components/Form/SelectButtonCategory';
+import TransactionTypeButton from '../../components/Form/TransactionTypeButton';
+import CategorySelect from '../CategorySelect';
 
 import {
   Container,
@@ -20,7 +20,7 @@ import {
   Form,
   Fields,
   TransactionTypes,
-} from "./styles";
+} from './styles';
 
 interface RegisterProps {
   name: string;
@@ -28,19 +28,19 @@ interface RegisterProps {
 }
 
 const schema = Yup.object().shape({
-  name: Yup.string().required("Nome é obrigatório"),
+  name: Yup.string().required('Nome é obrigatório'),
   amount: Yup.number()
-    .typeError("Informe um valor númerico")
-    .positive("O valor não pode ser negativo")
-    .required("O Valor é obrigatório"),
+    .typeError('Informe um valor númerico')
+    .positive('O valor não pode ser negativo')
+    .required('O Valor é obrigatório'),
 });
 
 const Register: React.FC = () => {
-  const [transactionType, setTransactionType] = useState("");
+  const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [category, setCategory] = useState({
-    key: "category",
-    name: "Categoria",
+    key: 'category',
+    name: 'Categoria',
   });
 
   const {
@@ -49,10 +49,10 @@ const Register: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-  const dataKey = "@myFinance:transactions";
+  const dataKey = '@myFinance:transactions';
   const navigation = useNavigation();
 
-  const haneldTransactionTypeSelect = (type: "positive" | "negative") => {
+  const haneldTransactionTypeSelect = (type: 'positive' | 'negative') => {
     setTransactionType(type);
   };
 
@@ -67,11 +67,11 @@ const Register: React.FC = () => {
   const handleRegister = async (form: RegisterProps) => {
     console.log(errors);
     if (!transactionType) {
-      return Alert.alert("Selection o tipo da transação");
+      return Alert.alert('Selection o tipo da transação');
     }
 
-    if (category.key === "category") {
-      return Alert.alert("Selection a categoria");
+    if (category.key === 'category') {
+      return Alert.alert('Selection a categoria');
     }
 
     const newTransaction = {
@@ -87,21 +87,21 @@ const Register: React.FC = () => {
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
-      const dataFormatted = [...currentData, newTransaction];
+      const dataFormatted = [newTransaction, ...currentData];
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
 
       reset();
-      setTransactionType("");
+      setTransactionType('');
       setCategory({
-        key: "category",
-        name: "Categoria",
+        key: 'category',
+        name: 'Categoria',
       });
 
-      navigation.navigate("Listagem");
+      navigation.navigate('Listagem');
     } catch (error) {
       console.log(error);
-      Alert.alert("Não foi possível salvar os dados.");
+      Alert.alert('Não foi possível salvar os dados.');
     }
   };
 
@@ -144,14 +144,14 @@ const Register: React.FC = () => {
               <TransactionTypeButton
                 title="Income"
                 type="up"
-                onPress={() => haneldTransactionTypeSelect("positive")}
-                isActive={transactionType === "up"}
+                onPress={() => haneldTransactionTypeSelect('positive')}
+                isActive={transactionType === 'up'}
               />
               <TransactionTypeButton
                 title="Outcome"
                 type="down"
-                onPress={() => haneldTransactionTypeSelect("negative")}
-                isActive={transactionType === "down"}
+                onPress={() => haneldTransactionTypeSelect('negative')}
+                isActive={transactionType === 'down'}
               />
             </TransactionTypes>
 
