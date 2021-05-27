@@ -11,16 +11,10 @@ import Button from '../../components/Form/Button';
 import InputForm from '../../components/Form/InputForm';
 import SelectButtonCategory from '../../components/Form/SelectButtonCategory';
 import TransactionTypeButton from '../../components/Form/TransactionTypeButton';
+import Header from '../../components/Header';
 import CategorySelect from '../CategorySelect';
 
-import {
-  Container,
-  Header,
-  Title,
-  Form,
-  Fields,
-  TransactionTypes,
-} from './styles';
+import { Container, Form, Fields, TransactionTypes } from './styles';
 
 interface RegisterProps {
   name: string;
@@ -118,9 +112,7 @@ const Register: React.FC = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
-        <Header>
-          <Title>Cadastro</Title>
-        </Header>
+        <Header title="Cadastro" />
 
         <Form>
           <Fields>

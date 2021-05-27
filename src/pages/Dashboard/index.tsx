@@ -121,6 +121,7 @@ const Dashboard: React.FC = () => {
     const lastTransTotal = `01 as ${lastTransExpensives}`;
 
     const total = entriesTotal - expensiveTotal;
+
     setHighlightCards({
       entries: {
         amount: entriesTotal.toLocaleString('pt-BR', {
