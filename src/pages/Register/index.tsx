@@ -52,7 +52,7 @@ const Register: React.FC = () => {
   const dataKey = "@myFinance:transactions";
   const navigation = useNavigation();
 
-  const haneldTransactionTypeSelect = (type: "up" | "down") => {
+  const haneldTransactionTypeSelect = (type: "positive" | "negative") => {
     setTransactionType(type);
   };
 
@@ -78,8 +78,9 @@ const Register: React.FC = () => {
       id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
+      date: new Date(),
     };
 
     try {
@@ -103,6 +104,16 @@ const Register: React.FC = () => {
       Alert.alert("Não foi possível salvar os dados.");
     }
   };
+
+  useEffect(() => {
+    const resetAsync = async () => {
+      const res = await AsyncStorage.getItem(dataKey!);
+
+      console.log(res);
+    };
+
+    resetAsync();
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -133,13 +144,13 @@ const Register: React.FC = () => {
               <TransactionTypeButton
                 title="Income"
                 type="up"
-                onPress={() => haneldTransactionTypeSelect("up")}
+                onPress={() => haneldTransactionTypeSelect("positive")}
                 isActive={transactionType === "up"}
               />
               <TransactionTypeButton
                 title="Outcome"
                 type="down"
-                onPress={() => haneldTransactionTypeSelect("down")}
+                onPress={() => haneldTransactionTypeSelect("negative")}
                 isActive={transactionType === "down"}
               />
             </TransactionTypes>
