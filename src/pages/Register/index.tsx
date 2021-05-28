@@ -102,8 +102,6 @@ const Register: React.FC = () => {
   useEffect(() => {
     const resetAsync = async () => {
       const res = await AsyncStorage.getItem(dataKey!);
-
-      console.log(res);
     };
 
     resetAsync();

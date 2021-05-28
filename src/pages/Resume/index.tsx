@@ -54,6 +54,10 @@ const Resume: React.FC = () => {
   };
 
   const loadData = async () => {
+    // setTimeout(() => {
+    setLoading(true);
+    // }, 2000);
+
     const dataKey = '@myFinance:transactions';
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
@@ -105,14 +109,13 @@ const Resume: React.FC = () => {
     });
 
     setTotalByCategories(totalByCategory);
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   };
 
   useFocusEffect(
     useCallback(() => {
-      setTimeout(() => {
-        setLoading(true);
-      }, 2000);
       loadData();
     }, [selectedDate])
   );
