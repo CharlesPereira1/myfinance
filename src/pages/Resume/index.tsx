@@ -22,6 +22,8 @@ import {
   MonthSelectButton,
   MonthSelectIcon,
   Month,
+  MensageEmpty,
+  MessageText,
 } from './styles';
 import { categories } from '../../utils/categories';
 import { useFocusEffect } from '@react-navigation/core';
@@ -148,6 +150,10 @@ const Resume: React.FC = () => {
         <ContainerLoading>
           <ActivityIndicator color={theme.colors.primary} size="small" />
         </ContainerLoading>
+      ) : totalByCategories.length === 0 ? (
+        <MensageEmpty>
+          <MessageText>Nenhum lançamento registrado neste periodo!</MessageText>
+        </MensageEmpty>
       ) : (
         <Content
           showsVerticalScrollIndicator={false}

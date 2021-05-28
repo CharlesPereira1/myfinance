@@ -41,3 +41,15 @@ export const Month = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(20)}px;
 `;
+
+export const MensageEmpty = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MessageText = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  color: ${({ theme }) => theme.colors.text};
+  font-size: ${RFValue(12)}px;
+`;
