@@ -2,13 +2,22 @@ import React, { useEffect, useState } from 'react';
 import uuid from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { VictoryPie } from 'victory-native';
 
 import Header from '../../components/Header';
 import HistoryCard from '../../components/HistoryCard';
 import { TransactionProps } from '../../components/TransactionCard';
 
-import { Container, ChartContainer, Content } from './styles';
+import {
+  Container,
+  ChartContainer,
+  Content,
+  MonthSelect,
+  MonthSelectButton,
+  MonthSelectIcon,
+  Month,
+} from './styles';
 import { categories } from '../../utils/categories';
 
 interface CategoryProps {
@@ -84,26 +93,48 @@ const Resume: React.FC = () => {
 
   return (
     <Container>
-      <Header title="Reumo por categoria" />
+      <Header title="Resumo por categoria" />
 
-      <ChartContainer>
-        <VictoryPie
-          data={totalByCategories}
-          colorScale={totalByCategories.map((m) => m.color)}
-          style={{
-            labels: {
-              fontSize: RFValue(14),
-              fontWeight: 'bold',
-              fill: '#ffff',
-            },
-          }}
-          labelRadius={55}
-          x="percentFormatted"
-          y="total"
-        />
-      </ChartContainer>
+      <Content
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingBottom: useBottomTabBarHeight(),
+        }}
+      >
+        <MonthSelect>
+          <MonthSelectButton>
+            <MonthSelectIcon name="chevron-left" />
+          </MonthSelectButton>
 
-      <Content>
+          <Month>Maio, 2021</Month>
+
+          <MonthSelectButton>
+            <MonthSelectIcon name="chevron-right" />
+          </MonthSelectButton>
+        </MonthSelect>
+
+        <ChartContainer>
+          <VictoryPie
+            data={totalByCategories}
+            colorScale={totalByCategories.map((m) => m.color)}
+            x="percentFormatted"
+            y="total"
+            height={340}
+            style={{
+              labels: {
+                fontSize: RFValue(14),
+                fontWeight: 'bold',
+                fill: '#ffff',
+              },
+            }}
+            labelRadius={55}
+            animate={{
+              duration: 500,
+            }}
+          />
+        </ChartContainer>
+
         {totalByCategories.map((categorie: CategoryProps) => (
           <HistoryCard
             key={categorie.id}
