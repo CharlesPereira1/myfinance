@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { VictoryPie } from 'victory-native';
+import { addMonths, subMonths, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import Header from '../../components/Header';
 import HistoryCard from '../../components/HistoryCard';
@@ -31,9 +33,18 @@ interface CategoryProps {
 }
 
 const Resume: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [totalByCategories, setTotalByCategories] = useState<CategoryProps[]>(
     []
   );
+
+  const handleDateChange = (action: 'next' | 'prev') => {
+    if (action === 'next') {
+      setSelectedDate(addMonths(selectedDate, 1));
+    } else {
+      setSelectedDate(subMonths(selectedDate, 1));
+    }
+  };
 
   const loadData = async () => {
     const dataKey = '@myFinance:transactions';
@@ -41,7 +52,10 @@ const Resume: React.FC = () => {
     const responseFormatted = response ? JSON.parse(response) : [];
 
     const expensives = responseFormatted.filter(
-      (f: TransactionProps) => f.type === 'negative'
+      (f: TransactionProps) =>
+        f.type === 'negative' &&
+        new Date(f.date).getMonth() === selectedDate.getMonth() &&
+        new Date(f.date).getFullYear() === selectedDate.getFullYear()
     );
 
     const expensivesTotal = expensives.reduce(
@@ -89,7 +103,7 @@ const Resume: React.FC = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [selectedDate]);
 
   return (
     <Container>
@@ -103,13 +117,21 @@ const Resume: React.FC = () => {
         }}
       >
         <MonthSelect>
-          <MonthSelectButton>
+          <MonthSelectButton
+            onPress={() => {
+              handleDateChange('prev');
+            }}
+          >
             <MonthSelectIcon name="chevron-left" />
           </MonthSelectButton>
 
-          <Month>Maio, 2021</Month>
+          <Month>{format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}</Month>
 
-          <MonthSelectButton>
+          <MonthSelectButton
+            onPress={() => {
+              handleDateChange('next');
+            }}
+          >
             <MonthSelectIcon name="chevron-right" />
           </MonthSelectButton>
         </MonthSelect>
@@ -129,9 +151,6 @@ const Resume: React.FC = () => {
               },
             }}
             labelRadius={55}
-            animate={{
-              duration: 500,
-            }}
           />
         </ChartContainer>
 
