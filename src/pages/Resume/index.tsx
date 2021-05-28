@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import uuid from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -21,6 +21,7 @@ import {
   Month,
 } from './styles';
 import { categories } from '../../utils/categories';
+import { useFocusEffect } from '@react-navigation/core';
 
 interface CategoryProps {
   id: string;
@@ -101,9 +102,11 @@ const Resume: React.FC = () => {
     setTotalByCategories(totalByCategory);
   };
 
-  useEffect(() => {
-    loadData();
-  }, [selectedDate]);
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [selectedDate])
+  );
 
   return (
     <Container>
