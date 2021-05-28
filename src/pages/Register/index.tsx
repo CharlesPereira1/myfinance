@@ -135,13 +135,13 @@ const Register: React.FC = () => {
                 title="Income"
                 type="up"
                 onPress={() => haneldTransactionTypeSelect('positive')}
-                isActive={transactionType === 'up'}
+                isActive={transactionType === 'positive'}
               />
               <TransactionTypeButton
                 title="Outcome"
                 type="down"
                 onPress={() => haneldTransactionTypeSelect('negative')}
-                isActive={transactionType === 'down'}
+                isActive={transactionType === 'negative'}
               />
             </TransactionTypes>
 
