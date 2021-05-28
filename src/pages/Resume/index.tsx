@@ -37,7 +37,7 @@ interface CategoryProps {
 }
 
 const Resume: React.FC = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [totalByCategories, setTotalByCategories] = useState<CategoryProps[]>(
     []
@@ -104,17 +104,16 @@ const Resume: React.FC = () => {
       }
     });
 
-    console.log(totalByCategory);
     setTotalByCategories(totalByCategory);
     setLoading(false);
   };
 
   useFocusEffect(
     useCallback(() => {
-      setLoading(true);
       setTimeout(() => {
-        loadData();
-      }, 1500);
+        setLoading(true);
+      }, 2000);
+      loadData();
     }, [selectedDate])
   );
 
