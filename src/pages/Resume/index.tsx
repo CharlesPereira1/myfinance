@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import uuid from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { VictoryPie } from 'victory-native';
 
 import Header from '../../components/Header';
@@ -86,7 +87,20 @@ const Resume: React.FC = () => {
       <Header title="Reumo por categoria" />
 
       <ChartContainer>
-        <VictoryPie data={totalByCategories} x="name" y="total" />
+        <VictoryPie
+          data={totalByCategories}
+          colorScale={totalByCategories.map((m) => m.color)}
+          style={{
+            labels: {
+              fontSize: RFValue(14),
+              fontWeight: 'bold',
+              fill: '#ffff',
+            },
+          }}
+          labelRadius={55}
+          x="percentFormatted"
+          y="total"
+        />
       </ChartContainer>
 
       <Content>
