@@ -15,7 +15,7 @@ const AppRoutes: React.FC = () => {
 
   return (
     <Navigator
-      initialRouteName="Resumo" //rota inicial para dev
+      // initialRouteName="Resumo" //rota inicial para dev
       tabBarOptions={{
         activeTintColor: theme.colors.secundary,
         inactiveTintColor: theme.colors.text,
