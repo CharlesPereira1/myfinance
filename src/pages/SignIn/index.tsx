@@ -1,11 +1,13 @@
 import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { useAuth } from '../../hooks/auth';
+
+import SignInSocialButton from '../../components/SignInSocialButton';
+
 import GoogleSvg from '../../assets/google.svg';
 import AppleSvg from '../../assets/apple.svg';
 import LogoSvg from '../../assets/logo.svg';
-
-import SignInSocialButton from '../../components/SignInSocialButton';
 
 import {
   Container,
@@ -18,6 +20,9 @@ import {
 } from './styles';
 
 const SignIn: React.FC = () => {
+  const { user } = useAuth();
+  console.log(user);
+
   return (
     <Container>
       <Header>
