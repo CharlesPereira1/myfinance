@@ -40,4 +40,9 @@ export const SignInTitle = styled.Text`
   margin-bottom: 67px;
 `;
 
-export const Footer = styled.View``;
+export const Footer = styled.View`
+  width: 100%;
+  height: 30%;
+
+  background-color: ${({ theme }) => theme.colors.secundary};
+`;
