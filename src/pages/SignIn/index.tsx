@@ -5,6 +5,8 @@ import GoogleSvg from '../../assets/google.svg';
 import AppleSvg from '../../assets/apple.svg';
 import LogoSvg from '../../assets/logo.svg';
 
+import SignInSocialButton from '../../components/SignInSocialButton';
+
 import {
   Container,
   Header,
@@ -12,6 +14,7 @@ import {
   Title,
   SignInTitle,
   Footer,
+  FooterWrapper,
 } from './styles';
 
 const SignIn: React.FC = () => {
@@ -34,7 +37,12 @@ const SignIn: React.FC = () => {
         </SignInTitle>
       </Header>
 
-      <Footer></Footer>
+      <Footer>
+        <FooterWrapper>
+          <SignInSocialButton title="Entrar com Google" icon={GoogleSvg} />
+          <SignInSocialButton title="Entrar com Apple" icon={AppleSvg} />
+        </FooterWrapper>
+      </Footer>
     </Container>
   );
 };
