@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { useAuth } from '../../hooks/auth';
@@ -18,10 +18,18 @@ import {
   Footer,
   FooterWrapper,
 } from './styles';
+import { Alert } from 'react-native';
 
 const SignIn: React.FC = () => {
-  const { user } = useAuth();
-  console.log(user);
+  const { signInWithGoogle } = useAuth();
+
+  const handleSignInWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      Alert.alert('Não foi possivel conectar à conta Google.');
+    }
+  };
 
   return (
     <Container>
@@ -44,7 +52,11 @@ const SignIn: React.FC = () => {
 
       <Footer>
         <FooterWrapper>
-          <SignInSocialButton title="Entrar com Google" icon={GoogleSvg} />
+          <SignInSocialButton
+            title="Entrar com Google"
+            icon={GoogleSvg}
+            onPress={handleSignInWithGoogle}
+          />
           <SignInSocialButton title="Entrar com Apple" icon={AppleSvg} />
         </FooterWrapper>
       </Footer>
