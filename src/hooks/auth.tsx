@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useContext } from 'react';
+import * as Google from 'expo-google-app-auth';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -18,6 +19,16 @@ interface IAuthContextData {
 const AuthContext = createContext({} as IAuthContextData);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const signInWithGoogle = async () => {
+    try {
+      const response = await Google.logInAsync({
+        iosClientId: '',
+        androidClientId: '',
+        scopes: [''],
+      });
+    } catch (error) {}
+  };
+
   return (
     <AuthContext.Provider value={{ user: 'Charles' }}>
       {children}
