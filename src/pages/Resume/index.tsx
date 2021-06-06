@@ -7,11 +7,15 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { VictoryPie } from 'victory-native';
 import { addMonths, subMonths, format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 
 import Header from '../../components/Header';
 import HistoryCard from '../../components/HistoryCard';
 import { TransactionProps } from '../../components/TransactionCard';
+import { useFocusEffect } from '@react-navigation/core';
+import { ptBR } from 'date-fns/locale';
+
+import { categories } from '../../utils/categories';
+import { useAuth } from '../../hooks/auth';
 
 import {
   Container,
@@ -25,8 +29,6 @@ import {
   MensageEmpty,
   MessageText,
 } from './styles';
-import { categories } from '../../utils/categories';
-import { useFocusEffect } from '@react-navigation/core';
 
 interface CategoryProps {
   id: string;
@@ -46,6 +48,7 @@ const Resume: React.FC = () => {
   );
 
   const theme = useTheme();
+  const { user } = useAuth();
 
   const handleDateChange = (action: 'next' | 'prev') => {
     if (action === 'next') {
@@ -60,7 +63,7 @@ const Resume: React.FC = () => {
     setLoading(true);
     // }, 2000);
 
-    const dataKey = '@myFinance:transactions';
+    const dataKey = `@myFinance:transactions_user${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
 

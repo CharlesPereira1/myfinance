@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
   };
 
   const loadTransaction = async () => {
-    const dataKey = '@myFinance:transactions';
+    const dataKey = `@myFinance:transactions_user${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
 
     const transactions = response ? JSON.parse(response) : [];

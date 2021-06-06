@@ -7,6 +7,8 @@ import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 
+import { useAuth } from '../../hooks/auth';
+
 import Button from '../../components/Form/Button';
 import InputForm from '../../components/Form/InputForm';
 import SelectButtonCategory from '../../components/Form/SelectButtonCategory';
@@ -37,13 +39,15 @@ const Register: React.FC = () => {
     name: 'Categoria',
   });
 
+  const { user } = useAuth();
+
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-  const dataKey = '@myFinance:transactions';
+  const dataKey = `@myFinance:transactions_user${user.id}`;
   const navigation = useNavigation();
 
   const haneldTransactionTypeSelect = (type: 'positive' | 'negative') => {
