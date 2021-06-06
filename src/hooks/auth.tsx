@@ -1,4 +1,10 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import * as Google from 'expo-google-app-auth';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -24,7 +30,9 @@ const AuthContext = createContext({} as IAuthContextData);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User>({} as User);
-  // const dataKey = '@myFinance:user';
+  const [userStorageLoading, setUserStorageLoading] = useState(true);
+
+  const userStorageKey = '@myFinance:user';
 
   const signInWithGoogle = async () => {
     try {
@@ -45,10 +53,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
 
         setUser(userLogeed);
-        await AsyncStorage.setItem(
-          '@myFinance:user',
-          JSON.stringify(userLogeed)
-        );
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogeed));
       }
     } catch (error) {
       throw new Error(error);
@@ -73,15 +78,27 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
 
         setUser(userLogeed);
-        await AsyncStorage.setItem(
-          '@myFinance:user',
-          JSON.stringify(userLogeed)
-        );
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogeed));
       }
     } catch (error) {
       throw new Error(error);
     }
   };
+
+  useEffect(() => {
+    const loadUserStorageDate = async () => {
+      const userStoraged = await AsyncStorage.getItem(userStorageKey);
+
+      if (userStoraged) {
+        const userLogged = JSON.parse(userStoraged) as User;
+        setUser(userLogged);
+      }
+
+      setUserStorageLoading(false);
+    };
+
+    loadUserStorageDate();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, signInWithGoogle, signInWithApple }}>
