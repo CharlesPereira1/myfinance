@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Alert } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
 
 import { useAuth } from '../../hooks/auth';
 
@@ -18,24 +20,31 @@ import {
   Footer,
   FooterWrapper,
 } from './styles';
-import { Alert } from 'react-native';
 
 const SignIn: React.FC = () => {
-  const { user, signInWithGoogle, signInWithApple } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { signInWithGoogle, signInWithApple } = useAuth();
+  const theme = useTheme();
 
   const handleSignInWithGoogle = async () => {
     try {
+      setLoading(true);
       await signInWithGoogle();
     } catch (error) {
       Alert.alert('Não foi possivel conectar à conta Google.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSignInWithApple = async () => {
     try {
+      setLoading(true);
       await signInWithApple();
     } catch (error) {
       Alert.alert('Não foi possivel conectar à conta Apple.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,6 +80,12 @@ const SignIn: React.FC = () => {
             onPress={handleSignInWithApple}
           />
         </FooterWrapper>
+        {loading && (
+          <ActivityIndicator
+            style={{ marginTop: 18 }}
+            color={theme.colors.primary}
+          />
+        )}
       </Footer>
     </Container>
   );

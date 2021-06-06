@@ -4,6 +4,8 @@ import { useTheme } from 'styled-components';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useAuth } from '../../hooks/auth';
+
 import {
   TransactionCard,
   TransactionProps,
@@ -50,6 +52,7 @@ const Dashboard: React.FC = () => {
   );
 
   const theme = useTheme();
+  const { user, signOut } = useAuth();
 
   const getLastTransaction = (
     type: 'positive' | 'negative',
@@ -174,17 +177,17 @@ const Dashboard: React.FC = () => {
               <UserInfo>
                 <Photo
                   source={{
-                    uri: 'https://avatars.githubusercontent.com/u/54192694?v=4',
+                    uri: user.photo,
                   }}
                 />
 
                 <User>
                   <UserGreeting>Olá, </UserGreeting>
-                  <UserName>Charles</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
 
-              <LogoutButton>
+              <LogoutButton onPress={signOut}>
                 <Icon name="power" />
               </LogoutButton>
             </UserWrapper>

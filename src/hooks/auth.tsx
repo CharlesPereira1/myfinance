@@ -22,8 +22,10 @@ interface User {
 
 interface IAuthContextData {
   user: User;
+  userStorageLoading: boolean;
   signInWithGoogle(): Promise<void>;
   signInWithApple(): Promise<void>;
+  signOut(): Promise<void>;
 }
 
 const AuthContext = createContext({} as IAuthContextData);
@@ -70,11 +72,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
 
       if (response) {
+        const name = response.fullName?.givenName!;
+        const photo = `https://ui-avatars.com/api/?name=John+Doe${name}&length=1`;
+
         const userLogeed = {
           id: String(response.user),
           email: response.email!,
-          name: response.fullName?.givenName!,
-          photo: undefined,
+          name,
+          photo,
         };
 
         setUser(userLogeed);
@@ -83,6 +88,11 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       throw new Error(error);
     }
+  };
+
+  const signOut = async () => {
+    setUser({} as User);
+    await AsyncStorage.removeItem(userStorageKey);
   };
 
   useEffect(() => {
@@ -101,7 +111,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle, signInWithApple }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        userStorageLoading,
+        signInWithGoogle,
+        signInWithApple,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
