@@ -58,12 +58,17 @@ const Dashboard: React.FC = () => {
     type: 'positive' | 'negative',
     conllection: DataListProps[]
   ) => {
+    const collectionFilttered = conllection.filter((f) => f.type === type);
+
+    if (collectionFilttered.length === 0) {
+      return 0;
+    }
+
     const lastTransactions = new Date(
       Math.max.apply(
         Math,
-        conllection
-          .filter((f) => f.type === type)
-          .map((m) => new Date(m.date).getTime())
+
+        collectionFilttered.map((m) => new Date(m.date).getTime())
       )
     );
 
@@ -121,7 +126,10 @@ const Dashboard: React.FC = () => {
 
     const lastTransEntries = getLastTransaction('positive', transactions);
     const lastTransExpensives = getLastTransaction('negative', transactions);
-    const lastTransTotal = `01 as ${lastTransExpensives}`;
+    const lastTransTotal =
+      lastTransEntries === 0
+        ? 'Não há movimentações'
+        : `01 as ${lastTransExpensives}`;
 
     const total = entriesTotal - expensiveTotal;
 
@@ -131,14 +139,20 @@ const Dashboard: React.FC = () => {
           style: 'currency',
           currency: 'BRL',
         }),
-        lastTransaction: `Última entrada, dia ${lastTransEntries}`,
+        lastTransaction:
+          lastTransEntries === 0
+            ? 'Não há transações'
+            : `Última entrada, dia ${lastTransEntries}`,
       },
       expensive: {
         amount: expensiveTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL',
         }),
-        lastTransaction: `Última saída, dia ${lastTransExpensives}`,
+        lastTransaction:
+          lastTransExpensives === 0
+            ? 'Não há transações'
+            : `Última saída, dia ${lastTransExpensives}`,
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
