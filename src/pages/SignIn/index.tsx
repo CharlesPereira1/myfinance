@@ -29,23 +29,21 @@ const SignIn: React.FC = () => {
   const handleSignInWithGoogle = async () => {
     try {
       setLoading(true);
-      await signInWithGoogle();
+      return await signInWithGoogle();
     } catch (error) {
       Alert.alert('Não foi possivel conectar à conta Google.');
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const handleSignInWithApple = async () => {
     try {
       setLoading(true);
-      await signInWithApple();
+      return await signInWithApple();
     } catch (error) {
       Alert.alert('Não foi possivel conectar à conta Apple.');
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
