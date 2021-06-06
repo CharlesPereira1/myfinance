@@ -1,5 +1,6 @@
-import React, { createContext, ReactNode, useContext } from 'react';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 import * as Google from 'expo-google-app-auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -13,13 +14,16 @@ interface User {
 }
 
 interface IAuthContextData {
-  // user: User;
+  user: User;
   signInWithGoogle(): Promise<void>;
 }
 
 const AuthContext = createContext({} as IAuthContextData);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User>({} as User);
+  // const dataKey = '@myFinance:user';
+
   const signInWithGoogle = async () => {
     try {
       const response = await Google.logInAsync({
@@ -37,7 +41,12 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           name: response.user.name!,
           photo: response.user.photoUrl!,
         };
-        console.log(userLogeed);
+
+        setUser(userLogeed);
+        await AsyncStorage.setItem(
+          '@myFinance:user',
+          JSON.stringify(userLogeed)
+        );
       }
     } catch (error) {
       throw new Error(error);
@@ -45,7 +54,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );
