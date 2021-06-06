@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
 import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   TransactionCard,
@@ -26,7 +27,6 @@ import {
   Icon,
   ContainerLoading,
 } from './styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface DataListProps extends TransactionProps {
   id: string;
