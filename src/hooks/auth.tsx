@@ -24,7 +24,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await Google.logInAsync({
         iosClientId:
-          '901841403397-kd8eqkab1f3kvn26aplilh6akl0p63bc.apps.googleusercontent.com',
+          '901841403397-kvr54sj35pdo7clt72rv1fk1aplor2uv.apps.googleusercontent.com',
         androidClientId:
           '901841403397-kd8eqkab1f3kvn26aplilh6akl0p63bc.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
